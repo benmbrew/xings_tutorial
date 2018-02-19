@@ -12,31 +12,54 @@ ui <- dashboardPage(skin = 'red',
                     ),
                     
                     dashboardSidebar(width = 300,
-                                     
                                      sidebarMenu(
-                                       menuItem('Raw clinical data',
+                                       menuItem('Raw data',
                                                 icon = icon('table'),
-                                                tabName = 'raw_clin'),
+                                                tabName = 'raw_data'),
                                        menuItem('Summary stats',
                                                 icon = icon('bar-chart-o'),
-                                                tabName = 'lfs_database'))),
+                                                tabName = 'ywca_stats'))),
                     dashboardBody(
                       tags$head(
                         tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
                       ),
                       tabItems(
-                        tabItem(tabName = "raw_clin",
+                        tabItem(
+                          tabName = "raw_data",
                                 h2('Download clinical data'),
                                 helpText(''),
                                 fluidRow(column(12,
-                                                DT::dataTableOutput('clin_table')))
+                                                DT::dataTableOutput('clin_table'))),
+                          tabsetPanel(
+                            tabPanel('HR data',
+                                     fluidRow(
+                                       column(12,
+                                              DT::dataTableOutput('hr_table'))
+                                     )
+                                     
+                            ),
+                            
+                            tabPanel('Program stats',
+                                     fluidRow(
+                                       column(12,
+                                              DT::dataTableOutput('program_table'))
+                                     )
+                                     
+                            ),
+                            tabPanel('Stats over time',
+                                     fluidRow(
+                                       column(12,
+                                              DT::dataTableOutput('over_time_table'))
+                                     )
+                            )
+
+                          )
                                 
                         ),
-                        tabItem(tabName = "lfs_database",
-                                h2('Explore Sickkids database'),
-                                helpText('example text'),
-                                fluidRow(column(12,
-                                                strong('Examine by'))),
+                        tabItem(
+                          tabName = "ywca_stats",
+                                h2('Explore YWCA data and stats'),
+                                helpText(''),
                                 fluidRow(column(4, 
                                                 checkboxInput('cancer_status',
                                                               'Cancer type',
@@ -60,8 +83,8 @@ ui <- dashboardPage(skin = 'red',
                                 tabsetPanel(
                                   tabPanel('Table',
                                            fluidRow(column(12,
-                                                           textOutput('lfs_text'),
-                                                           DT::dataTableOutput('lfs_table')
+                                                           textOutput('xing_text'),
+                                                           DT::dataTableOutput('xing_table')
                                            ))),
                                   tabPanel('Plot', 
                                            plotOutput('bar_plot'))))
